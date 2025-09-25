@@ -1,0 +1,9 @@
+replicaCount: 2
+image:
+  tag: "latest"
+ingress:
+  host: "f1-racing-dev.local"
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi

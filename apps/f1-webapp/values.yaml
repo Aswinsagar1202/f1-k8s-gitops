@@ -1,0 +1,124 @@
+replicaCount: 3
+
+image:
+  repository: nginx
+  tag: alpine
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+ingress:
+  enabled: true
+  className: nginx
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  host: f1-racing.local
+  path: /
+  pathType: Prefix
+
+resources:
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+# F1 App Configuration
+configMap:
+  enabled: true
+  data:
+    index.html: |
+      <!DOCTYPE html>
+      <html>
+      <head>
+          <title>🏎️ F1 Racing Hub - GitOps Edition</title>
+          <style>
+              body { 
+                  font-family: 'Arial', sans-serif; 
+                  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+                  color: #fff; 
+                  margin: 0; 
+                  padding: 20px; 
+                  min-height: 100vh;
+              }
+              .header { 
+                  background: linear-gradient(45deg, #ff1e00, #ffd700); 
+                  padding: 30px; 
+                  border-radius: 15px; 
+                  text-align: center;
+                  box-shadow: 0 8px 32px rgba(255, 30, 0, 0.3);
+              }
+              .gitops { 
+                  background: linear-gradient(45deg, #0066cc, #00ccff); 
+                  padding: 20px; 
+                  margin: 20px 0; 
+                  border-radius: 10px;
+                  text-align: center;
+              }
+              .stats { 
+                  display: flex; 
+                  justify-content: space-around; 
+                  margin: 30px 0; 
+                  flex-wrap: wrap;
+              }
+              .stat-box { 
+                  background: rgba(51, 51, 51, 0.8); 
+                  padding: 20px; 
+                  border-radius: 10px; 
+                  text-align: center;
+                  margin: 10px;
+                  min-width: 150px;
+                  border: 2px solid #ffd700;
+              }
+              .version {
+                  position: fixed;
+                  bottom: 20px;
+                  right: 20px;
+                  background: #333;
+                  padding: 10px;
+                  border-radius: 5px;
+                  font-size: 12px;
+              }
+          </style>
+      </head>
+      <body>
+          <div class="header">
+              <h1>🏎️ F1 Racing Hub 2024</h1>
+              <p>Ultimate Formula 1 Experience</p>
+          </div>
+          <div class="gitops">
+              <h2>🚀 Deployed via ArgoCD GitOps!</h2>
+              <p>This application is automatically synchronized from Git repository</p>
+              <p><strong>Continuous Deployment in Action!</strong></p>
+          </div>
+          <div class="stats">
+              <div class="stat-box">
+                  <h3>Lew Hamilton</h3>
+                  <p>Championship Leader</p>
+                  <p>🏆</p>
+              </div>
+              <div class="stat-box">
+                  <h3>24 Races</h3>
+                  <p>2024 Season</p>
+                  <p>🏁</p>
+              </div>
+              <div class="stat-box">
+                  <h3>10 Teams</h3>
+                  <p>Competing</p>
+                  <p>🏎️</p>
+              </div>
+          </div>
+          <div class="version">
+              <p>Pod: <span id="hostname">Loading...</span></p>
+              <p>Version: v1.0.0-gitops</p>
+              <p>Deployed: <span id="timestamp"></span></p>
+          </div>
+          <script>
+              document.getElementById('hostname').innerText = window.location.hostname;
+              document.getElementById('timestamp').innerText = new Date().toLocaleString();
+          </script>
+      </body>
+      </html>
