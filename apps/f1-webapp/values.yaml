@@ -122,3 +122,34 @@ configMap:
           </script>
       </body>
       </html>
+
+# ServiceAccount configuration (missing from current values.yaml)
+serviceAccount:
+  create: true
+  annotations: {}
+  name: ""
+
+# Autoscaling configuration (also referenced in templates)
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+# Pod annotations
+podAnnotations: {}
+
+# Pod security context
+podSecurityContext: {}
+
+# Security context
+securityContext: {}
+
+# Node selector
+nodeSelector: {}
+
+# Tolerations
+tolerations: []
+
+# Affinity
+affinity: {}
